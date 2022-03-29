@@ -18,7 +18,7 @@ arr_data = []
 arrdat = []
 i = 0
 
-con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Acer\Documents\Coding\Web application project\Password Manager.accdb;'
+con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=Password Manager.accdb;'
 
 app = Flask(__name__)
 
@@ -50,7 +50,7 @@ def signup():
 def add(sEmail, sPassword, sUsername ):
     print("hello")
    
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Acer\Documents\Coding\Web application project\Password Manager.accdb;'
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=Password Manager.accdb;'
     conn = pyodbc.connect(con_string)
         
     print("Connected to database")
@@ -88,7 +88,7 @@ def Login():
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Acer\Documents\Coding\Web application project\Password Manager.accdb;'
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=Password Manager.accdb;'
     cdata = b''
     data = b''
     global key, iv, account_ID, test, j
@@ -159,7 +159,7 @@ def count():
 @app.route('/call', methods = ['GET','POST'])
 def call():
     global account_ID, arr_ID, arr_data, counts, i
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Acer\Documents\Coding\Web application project\Password Manager.accdb;'
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=Password Manager.accdb;'
     
     if request.method == 'GET':
         C2 = AES.new(key, AES.MODE_CBC, iv)
@@ -178,7 +178,7 @@ def save():
     global account_ID, arrdat, i
     arrdat = newdata.split("~") 
     i = len(arrdat) 
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Acer\Documents\Coding\Web application project\Password Manager.accdb;'
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=Password Manager.accdb;'
     conn = pyodbc.connect(con_string)
     print("Connected to database")
 
