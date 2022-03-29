@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevices & Contact page</title>
+</head>
+<style>
+    .login{
+        width: 365px;
+        height: 620px;
+        margin: auto;
+        border-radius: 3px;
+    }
+    h1{
+        text-align: center;
+        padding: 16px;
+       
+    }
+    form{
+        width: 300px;
+        margin-left: 20px;
+    }
+    label{
+        display: flex;
+        margin-top: 20px;
+        font-size: 18px;
+        
+    }
+    input{
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border: 1px solid goldenrod;
+        border-radius: 6px;
+    }
+    p{
+        align-items: center;
+    }
+    button{
+        width: 320px;
+        height: 35px;
+        margin-top: 20px;
+        border: none;
+        background-color: goldenrod;
+        font-size: 19px;
+        border-radius: 2px solid goldenrod;
+    }
+    input[type='button']{
+        width: 320px;
+        height: 35px;
+        margin-top: 20px;
+        border: none;
+        background-color: goldenrod;
+        font-size: 19px;
+        border-radius: 2px solid goldenrod;
+    }
+    a{
+        text-align: center;
+    }
+</style>
+<body>
+    
+    <div class="login">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script src="static/js/Login.js"></script>
+        <h1>LOGIN</h1>
+        <label>USER NAME OR EMAIL</label>
+        <input type="text"  id="username"  required>
+        <label>ENTER PASSWORD</label>
+        <input type="text"  id="password" required>
+        <br>
+        <br>
+        <a href="#">Fogortten Password?</a>
+          
+        <button onclick="login()">LOGIN</button>
+        <label>Don't have an Account?</label>
+            
+           <a href="register.html"> <input type="button" value="Register Now" ></a>
+        
+    </div>
+    
+   
+</body>
+</html>
