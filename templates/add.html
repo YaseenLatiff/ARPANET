@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static\css\style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<style>
+    .login{
+        width: 365px;
+        height: 620px;
+        margin: auto;
+        border-radius: 3px;
+    }
+    
+</style>
+<body>
+    
+    <div class="login">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script src="static/js/add.js"></script>
+        <h1>ADD A NEW PASSOWORD</h1>
+        <form>
+            <label>ENTER USERNAME</label>
+            <input type="text"  id="username"  required>
+            <label>ENTER PASSWORD</label>
+            <input type="text"  id="password" required>
+            <label>ENTER COMPANY NAME</label>
+            <input type="text"  id="company" required>
+            <br>
+            <br>
+    
+              
+            <button type="button" onclick="add()">ADD ACCOUNT</button>
+            <br>
+            <br>
+            <button type="button" onclick="menu()">BACK TO PASSWORDS SCREEN</button>
+        </form>
+        
+        
+    </div>
+    
+   
+</body>
+</html>

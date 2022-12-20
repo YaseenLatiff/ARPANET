@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARPANET.COM</title>
+    <link rel="stylesheet" href="static\css\style.css">
+</head>
+<body>
+    <script src="static/js/index.js"></script>
+   <div class="container">
+       <div class="navigation_bar">
+
+           <img src="static\images\LOGO (2).jpg" class="logo">
+           <nav>
+               <ul id="toggle_list">
+                   <li><a style="font-size: 20px; font-weight: bold;" href="#body_container">HOME</a></li>
+                   <li><a style="font-size: 20px; font-weight: bold;" href="#title">SERVICES</a></li>
+                   <li><a style="font-size: 20px; font-weight: bold;" href="#contactUs">CONTACT US</a></li>
+                   <li><a style="font-size: 20px; font-weight: bold;" href="#about">ABOUT</a></li>
+                   <li><a style="font-size: 20px; font-weight: bold;" href="/Login">LOGIN</a></li>
+               </ul>
+           </nav>
+           <img src="static\images\logoo.jpg" class="menu" onclick="togglemenu()">
+       </div>
+       <div id="body_container" class="body_container">
+           <div class="body1">
+               <h2>PASSWORD MANANGER</h2>
+               <p>Secure you Password with One of the most trusted PASSWORD MANANGER that uses high level of encryption to secure your passwords</p>
+         <button class="btn" onclick="register()" > STARTED</button> </a>
+            </div>
+           <div class="body2">
+               <img src="static\images\Logo2.jpg" class="logoD">
+           </div>
+       </div>
+   </div>
+   <section>
+       <div id="title" class="title">
+           <h1>Services</h1>
+       </div>
+   </section>
+        <div class="serviceInfor">
+            <img src="static\images\services.jpg" style="width: 250px;">
+            <h3>We offer a well secured Password Mananging Services that is trusted By millions and millions of Users around the world,<br>
+            We are trusted by well trained Ethical hackers with lot of experience in the field of Pen-testing. <a href="#body_container">Join Now</a> to secure your Passwords today</h3>
+        </div>
+        <div id="contactUs" class="contactUs">
+            <img src="static\images\contactUs.jpg" alt="" style="width: 250px;">
+            <h3>For more infor contact us now in all Our Media Platforms</h3>
+                <br>
+                <br>
+            <h4>Follow Us On:</h4>
+                <div class="socialMedia">
+                     <a href="www.instagram.com"><img src="static\images\instagram.jpg" alt=""></a>
+                      <a href="www.facook.com"> <img src="static\images\facebook.jpg" alt=""></a>
+                   <a href="www.tiktok.com"> <img src="static\images\tiktok.jpg" alt=""></a>
+                  <a href="www.twitter.com">  <img src="static\images\twitter.jpg" alt=""></a>
+                </div>
+                <h3>And Join Our Happy Community today, ask any questions and find the frequently asked questions about our service with their answers now</h3>
+        </div>
+        <div id="about" class="about" style="background-color: gray;">
+           <h2>ABOUT PAGE</h2>
+           <BR>
+           <BR>
+    
+           <h3>Arpanet is a South African based Company that uses high level of encryption (hence Logo is written e-Password which is encrypted Passwords) to secure users Passwords. It is safe and more user friendly (easy to use)<br></h3> 
+<br>
+           <p> ARPANET copyright &copy; rules 2022</p>
+        </div>
+   <script>
+       var toggle_list = document.getElementById('toggle_list');
+       toggle_list.style.maxHeight = '0px'
+       function togglemenu(){
+           if(toggle_list.style.maxHeight =='0px')
+           {
+               toggle_list.style.maxHeight = '130px'
+           }
+           else{
+               toggle_list.style.maxHeight = '0px'
+           }
+       }
+   </script>
+</body>
+</html>
