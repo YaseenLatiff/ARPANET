@@ -12,12 +12,14 @@ key = b"\x1f4\xc0\xf4\x82\xb8\x8e\x88\xe7\xd1'\xdf\x128D\xe5"
 iv = b'\xe4BG\xaa\xe7(\xfc6\xe8\xea\x18&H\x1c\xb9>'
 account_ID = 0
 arr_ID = []
+editDats = []
 counts = -1
 test = "False"
 j = 0
 arr_data = []  # stores the encrypted data from the password table
 arrdat = []  # stores the password data from the password manager website
 i = 0
+counting = -1
 
 con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
 
@@ -101,9 +103,11 @@ def login():
     con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
     cdata = b''
     data = b''
-    global key, iv, account_ID, test, j, arr_ID, arr_data, counts, i
+    global key, iv, account_ID, test, j, arr_ID, arr_data, counts, i, counting
     arr_data.clear()
     arr_ID.clear()
+    counting = -1
+    editDats.clear()
     i = 0
     counts = 0
     data = request.get_json()
@@ -171,7 +175,8 @@ def count():
         i = 0
         arr_data.clear()
         arr_ID.clear()
-
+        counting = -1
+        editDats.clear()
         conn = pyodbc.connect(con_string)
         cursor = conn.cursor()
         cursor.execute(
@@ -193,7 +198,7 @@ def count():
 
 @app.route('/call', methods=['GET', 'POST'])
 def call():
-    global account_ID, arr_ID, arr_data, counts, i
+    global account_ID, arr_ID, arr_data, counts, i, counting
     con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
 
     if request.method == 'GET':
@@ -222,7 +227,7 @@ def save():
         upload = True
         data = request.get_json()
         newdata = data
-        global account_ID, arrdat, i, arr_data, counts
+        global account_ID, arrdat, i, arr_data, counts, counting
         arrdat = newdata.split("~")
         i = len(arrdat)
         con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
@@ -264,11 +269,28 @@ def addat():
     return render_template('add.html')
 
 
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    global counting, editDats
+    if request.method == 'POST':
+        data = request.get_json()
+        newdats = data
+        counting = counting + 1
+        editDats.append(newdats)
+        print(editDats[counting])
+        return render_template('edit.html')
+
+
+@app.route('/ed', methods=['GET', 'POST'])
+def ed():
+    if(request.method == 'GET'):
+        arr
+
+
 @app.route('/addd', methods=['GET', 'POST'])
 def addd():
     upload = False
     if request.method == 'POST':
-
         data = request.get_json()
         newdats = data
         global account_ID, arrdat, i, arr_data, counts
