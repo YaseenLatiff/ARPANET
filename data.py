@@ -169,7 +169,7 @@ def menu():
 
 @app.route('/count', methods=['GET', 'POST'])
 def count():
-    global account_ID, arr_ID, arr_data, counts, j, i
+    global account_ID, arr_ID, arr_data, counts, j, i, counting, editDats
     con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
     if request.method == 'GET':
         i = 0
@@ -204,7 +204,7 @@ def call():
     if request.method == 'GET':
         # This ensures that the program does not go past the arrays limit
         # This ensures that the program does not go past the arrays limit
-        # decrypting the data from the database
+        # decrypting the data from the databas
         if(i < len(arr_data)):
             C2 = AES.new(key, AES.MODE_CBC, iv)
             plaindata = unpad(C2.decrypt(arr_data[i]), 16)
@@ -229,35 +229,24 @@ def save():
         newdata = data
         global account_ID, arrdat, i, arr_data, counts, counting
         arrdat = newdata.split("~")
-        i = len(arrdat)
         con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
         conn = pyodbc.connect(con_string)
-        print("Connected to database")
 
         cursor = conn.cursor()
-        cursor.execute(
-            'DELETE FROM Passwords WHERE Account_ID = ?', account_ID)
+
+        # encrypting data to be added to the database
+        C1 = AES.new(key, AES.MODE_CBC, iv)
+        cipherdata = C1.encrypt(pad(arrdat[1].encode(), 16))
+        # encrypting data to be added to the database
+        cursor.execute('UPDATE Passwords SET Encrypted_data = ? WHERE ID = ?',
+                       (cipherdata, arrdat[0]))
         conn.commit()
-        print("Data Deleted")
-        print(i)
-        for j in range(i):
-            cursor.execute('SELECT LAST(ID) FROM Passwords')
-            lastID = cursor.fetchone()
-            x = lastID[0] + 1
-            # encrypting data to be added to the database
-            C1 = AES.new(key, AES.MODE_CBC, iv)
-            cipherdata = C1.encrypt(pad(arrdat[j].encode(), 16))
-            # encrypting data to be added to the database
-            cursor.execute('INSERT INTO Passwords VALUES (?,?,?)',
-                           (x, cipherdata, account_ID))
-            conn.commit()
-        print("Added to the database")
-        arr_data = []  # I had to add this block of code and it results in the person having to press the call button twice when calling
+        arr_data.clear()  # I had to add this block of code and it results in the person having to press the call button twice when calling
         # their passwords (because I figured this out so late I was not able to change this glitch)
         counts = 0
         # from the javascript end,but I can't remove it because it protects the other passwords from being displayed
         # which was an issue before I added this code
-        return True
+        return "True"
 
     if((request.method == 'GET') and not(upload)):
         return "True"
@@ -269,22 +258,24 @@ def addat():
     return render_template('add.html')
 
 
+@app.route('/ed', methods=['GET', 'POST'])
+def ed():
+    return render_template('edit.html')
+
+
 @app.route('/edit', methods=['GET', 'POST'])
 def edit():
     global counting, editDats
     if request.method == 'POST':
         data = request.get_json()
         newdats = data
-        counting = counting + 1
         editDats.append(newdats)
-        print(editDats[counting])
-        return render_template('edit.html')
+        return "True"
 
-
-@app.route('/ed', methods=['GET', 'POST'])
-def ed():
-    if(request.method == 'GET'):
-        arr
+    if request.method == 'GET':
+        line = editDats[0]+"|" + editDats[1] + \
+            "|" + editDats[2] + "|" + editDats[3]
+        return line
 
 
 @app.route('/addd', methods=['GET', 'POST'])
@@ -313,7 +304,33 @@ def addd():
 
     if((request.method == 'GET') and not(upload)):
         return "True"
-    return False
+    return "False"
+
+
+delete = False
+
+
+@app.route('/delete', methods=['GET', 'POST'])
+def deleted():
+    global delete
+    if request.method == 'POST':
+        delete = True
+        data = request.get_json()
+        newdats = data
+
+        con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+        conn = pyodbc.connect(con_string)
+        cursor = conn.cursor()
+
+        cursor.execute('DELETE * FROM Passwords WHERE ID = ?', (newdats))
+        cursor.commit()
+        print(newdats)
+        return "True"
+
+    if (request.method == 'GET') and (delete):
+        delete = False
+        return "True"
+    return "False"
 
 
 # links the required files for the app

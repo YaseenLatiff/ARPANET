@@ -9,23 +9,34 @@
     <style>
         
         table{
-            align-self: center;
             background-color: goldenrod;
             border-radius: 40px;
             padding: 10px;
+            align-self: center;
         }
         th{
             font-size: 40px;
             width : 200px;
             color : #fff;
+            align-self: flex-start;
+        }
+        tbody{
+            color : white;
+            border-radius: 40px;
+            border-color:#fff;
+            border-spacing:100px;
         }
         td{
-            align-items: center;
+            
+            border-color : white;
             font-size: 25px;
-            align-content: center;
+            border-radius: 10px;
 
         }
-        
+        p{
+            align-items: center;
+            justify-content: center;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -44,6 +55,7 @@
            
             <table id="table" onclick="click()">
                 <thead>
+                    <th>ID</th>
                     <th>Email</th>
                     <th>Password</th>
                     <th>Company</th>
@@ -52,9 +64,6 @@
 
                 </tbody>
             </table>
-            <br>
-            <br>
-            <button onclick="edit()" >Edit</button>
             <br>
             <br>
             <button onclick="add()" >Add</button>

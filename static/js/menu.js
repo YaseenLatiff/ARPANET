@@ -49,24 +49,32 @@ function call(){
                             col3 = document.createElement("td");
                             col4 = document.createElement("td");
                             col5 = document.createElement("td");
-                        
-                            col2.width = 200 + "px";
-                            col3.width = 200 + "px";
-                            col4.width = 200 + "px";
+                            col6 = document.createElement("td");
+
                             
-                            eddy = document.createElement("input");
-                            eddy.type = "Button";
+                            
+                            
+
+                            eddy = document.createElement("BUTTON");
+                            
+                            deddy = document.createElement("BUTTON");
+                           
 
                             email = document.createTextNode(my_Arr[0]);
                             password = document.createTextNode( my_Arr[1]);
                             Company = document.createTextNode(my_Arr[2]);
                             eddy.id = arr_ID[i];
-                            eddy.value = "EDIT"
-                            eddy.addEventListener('click', function(){
-                                col6 = document.createElement("td");
-                                reddy = document.createTextNode(eddy.id);
+                            deddy.id = arr_ID[i];
+                            eddy.innerHTML = "EDIT";
+                            eddy.setAttribute('title',"edit the current password") ;
+                           
+                            deddy.innerHTML = "DELETE";
+                            deddy.setAttribute('title',"delete the current password");
+                            
+                            
+                        
 
-                                col6.appendChild(reddy);
+                            eddy.addEventListener('click', function(){
                                 tabs = document.getElementsByTagName('table');
                                 
                                 for(var m = 0; m < tabs.length; m++){
@@ -75,7 +83,7 @@ function call(){
                                         for(var r = 1; r < tr.length; r++){
                                             td = tr[r].getElementsByTagName('td');
                                             temp = td[0].innerHTML;
-                                            if(temp == eddy.id){
+                                            if(temp == this.id){
                                                 
                                                 for(var k = 0; k < td.length; k++){
                                                     $.ajax({
@@ -83,33 +91,56 @@ function call(){
                                                         type:'POST',
                                                         contentType: "application/json",
                                                         data:JSON.stringify(td[k].innerHTML)
+                                                        
                                                     });
+                                                    
                                                 }
+                                                window.location.href = "/ed"
+                                                
                                             }
-                                            
-                                        
                                         }  
-                                    
-                                        
-                                    
-                                    
-                                   
                                 }
+                            });
+                            deddy.addEventListener('click', function(){
                                 
+                                
+                                $.ajax({
+                                    url:'/delete',
+                                    type:'POST',
+                                    contentType: "application/json",
+                                    data:JSON.stringify(this.id)
+                                                        
+                                });
+                                $.ajax({
+                                    url:'/delete',
+                                    type:'GET',
+                                    contentType: "application/json",
+                                    success:function(data){
+                                        newdats = data;
+                                        if(newdats == "True"){
+                                            alert("That has been deleted");
+                                            location.reload();
+                                        }
+                                    }
+                                                        
+                                });
+                                                    
                             });
 
-                            col5.appendChild(document.createTextNode(arr_ID[i]));
+                            col1.appendChild(document.createTextNode(arr_ID[i]));
                             col2.appendChild(email);
                             col3.appendChild(password);
                             col4.appendChild(Company);
-                            col1.appendChild(eddy);
+                            col5.appendChild(eddy);
+                            col6.appendChild(deddy);
 
-                            row.appendChild(col5);
+                            row.appendChild(col1);
                             row.appendChild(col2);
                             row.appendChild(col3);
                             row.appendChild(col4);
-                            row.appendChild(col1);
-                            
+                            row.appendChild(col5);
+                            row.appendChild(col6);
+
                             tabody.appendChild(row);
     
                             //displays the value in the textarea html component
