@@ -4,7 +4,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 html{
-    background-color:black;
+    background-color:lightgrey;
 }
 h1{
     text-align: center;
@@ -54,7 +54,7 @@ nav ul li a{
     font-size: 14px;
 }
 nav ul li a:hover{
-    color: blue;
+    color: lightblue;
 }
 .body_container{
     display: flex;
@@ -122,9 +122,9 @@ section{
     width: 1160px;
     margin: 50px;
     padding: 50px;
-    background-color: blue;
+    background-color: lightblue;
     border-radius: 10px;
-    color:white;
+    color:black;
 }
 .title{
     text-align: center;
@@ -193,10 +193,7 @@ p{
     font-size: 20px;
     margin-bottom: 250px;
 }
-form{
-    justify-items: center;
-    background-color:blue;
-}
+
 label{
     display: flex;
     margin-top: 20px;

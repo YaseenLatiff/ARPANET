@@ -6,32 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static\css\style.css">
     <title>Signup</title>
-    <style>
-        .signUp{
-            width: 365px;
-            height: 620px;
-            margin: auto;
-            border-radius: 3px;
-        }
-        
-    </style>
+    
 </head>
 <body>
     
-    <div class="signUp">
+    <section style="position:absolute">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         <script src="static/js/SignUp.js"></script>
         <h1>Sign Up</h1>
-            <form>
+            <form style="position:relative" class="dats">
                 <label>ENTER YOUR EMAIL ADDRESS</label>
                 <input type="email"  id="email" required>
                 <label>ENTER YOUR USER NAME</label>
                 <input type="text"  id="username"  required>
                 <label>ENTER PASSWORD</label>
-                <input type="text"  id="password"  required>
+                <input type="password"  id="password"  required>
                 <label>CONFIRM PASSWORD</label>
-                <input type="text"  id="password2"  required>
+                <input type="password"  id="password2"  required>
                 <br>
                 <br>
                 <button type="button" onclick="signup()">REGISTER</button>
@@ -44,6 +36,6 @@
         <p>Please note that by Signing Up, You Accept Our<a href="#">Terms and Conditions</a>
         and <a href="#">Policy and Privacy</a>
         </p> 
-    </div>
+    </section>
 </body>
 </html>
