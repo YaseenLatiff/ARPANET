@@ -7,18 +7,27 @@
     <title>Password Mananger </title>
     <link rel="stylesheet" href="static\css\style.css">
     <style>
-        
+        body{
+            position:absolute;
+        }
         table{
-            background-color: goldenrod;
-            border-radius: 40px;
-            padding: 10px;
-            align-self: center;
+            background-color: blue;
+            border-radius: 10px;
+
+           
+            
+        }
+        .table{
+            height:400px;  
+            overflow-y:auto; 
+            align-self:center;
+
         }
         th{
             font-size: 40px;
-            width : 200px;
-            color : #fff;
-            align-self: flex-start;
+            background-color: white;
+            color : black;
+            border-radius: 10px;
         }
         tbody{
             color : white;
@@ -31,7 +40,8 @@
             border-color : white;
             font-size: 25px;
             border-radius: 10px;
-
+            background-color: white;
+            color : black;
         }
         p{
             align-items: center;
@@ -50,28 +60,32 @@
         
    </div>
    </div>
-   <h1>Password Manager</h1>
-        <div class="textBox">
+   <h1 style="color:white">Password Manager</h1>
+        <section>
+            <div class="table">
+                <table id="table" onclick="click()">
+                    <thead>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Company</th>
+                    </thead>
+                    <tbody>
+    
+                    </tbody>
+                </table>
+               </div>
+                
+                <br>
+                <br>
+                <button onclick="add()" >Add</button>
+                <br>
+                <br>
+                <button onclick="logout()" >Logout</button>
+        </section>
            
-            <table id="table" onclick="click()">
-                <thead>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Company</th>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-            <br>
-            <br>
-            <button onclick="add()" >Add</button>
-            <br>
-            <br>
-            <button onclick="logout()" >Logout</button>
             
             
-        </div>
+        
 </body>
 </html>

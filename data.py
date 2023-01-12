@@ -7,6 +7,7 @@ from Crypto.Util.Padding import pad, unpad
 import pyodbc
 import psycopg2
 import os
+import mysql.connector
 
 key = b"\x1f4\xc0\xf4\x82\xb8\x8e\x88\xe7\xd1'\xdf\x128D\xe5"
 iv = b'\xe4BG\xaa\xe7(\xfc6\xe8\xea\x18&H\x1c\xb9>'
@@ -20,9 +21,15 @@ arr_data = []  # stores the encrypted data from the password table
 arrdat = []  # stores the password data from the password manager website
 i = 0
 counting = -1
+tempaccount_ID = []
+newdats = []
 
 con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
-
+connecter = mysql.connector.connect(host='localhost',
+                                    database='Password_Manager',
+                                    user='root',
+                                    password='4746')
+res = "None"
 app = Flask(__name__)
 
 cors = CORS(app)
@@ -31,7 +38,19 @@ cors = CORS(app)
 
 @app.route('/')
 def index():
-
+    global account_ID, arr_ID, arr_data, counts, i, counting, editDats, con_string, connecter
+    arr_data.clear()
+    arr_ID.clear()
+    counting = -1
+    editDats.clear()
+    i = 0
+    counts = 0
+    account_ID = 0
+    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+    connecter = mysql.connector.connect(host='localhost',
+                                        database='Password_Manager',
+                                        user='root',
+                                        password='4746')
     return render_template('index.html')
 # Makes sure the application will open up on the index html page
 
@@ -47,25 +66,61 @@ def register():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    data = request.get_json()
-    print(data)
-    username, email, password = data.split('|')
-    print(username)
-    print(email)
-    print(password)
-    add(email.upper(), password, username.upper())
+
+    global key, iv, con_string, res, connecter
+    if request.method == 'POST':
+        res = "None"
+        conn = pyodbc.connect(con_string)
+
+        cursor = connecter.cursor()
+        cursor.execute('SELECT * FROM Accounts')
+
+        result = cursor.fetchall()
+        data = request.get_json()
+        sUsername, sEmail, sPassword = data.split('|')
+
+        for row in result:
+            if(row[0] != None):
+                cdata = row[1]
+                # decrypting the data from the database
+                C2 = AES.new(key, AES.MODE_CBC, iv)
+                plainname = unpad(C2.decrypt(cdata), 16)
+
+                mail = row[3]
+                C4 = AES.new(key, AES.MODE_CBC, iv)
+                plainmail = unpad(C4.decrypt(mail), 16)
+
+        # decrypting the data from the database
+        # When an encrypted text is decrypted between every letter \x00 can be found which results
+
+        # in not being able to confirm whether or not the password and username are correct
+                plainname = plainname.replace(b'\x00', b'')
+                plainmail = plainmail.replace(b'\x00', b'')
+        # so I am using replace to remove \x00 from the byte data
+                name = plainname.decode()
+                email = plainmail.decode()
+                if (sUsername.upper() == name):
+                    res = "Name"
+                elif(email == sEmail.upper()):
+                    res = "Mail"
+
+        if res == "None":
+            add(sEmail.upper(), sPassword, sUsername.upper())
+
+        return res
+
+    if request.method == 'GET':
+        print(res)
+        return res
 # receives sign up data from the sign up html page and adds it to the database
 
 # used to add the provided sign up data to the database
 
 
 def add(sEmail, sPassword, sUsername):
-    print("hello")
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+    print("Hello")
+    global key, iv, con_string, connecter
     conn = pyodbc.connect(con_string)
-
-    print("Connected to database")
-    global key, iv
     # encrypting the provided data
     C1 = AES.new(key, AES.MODE_CBC, iv)
     C2 = AES.new(key, AES.MODE_CBC, iv)
@@ -75,17 +130,17 @@ def add(sEmail, sPassword, sUsername):
     Cipherusername = C3.encrypt(pad(sUsername.encode(), 16))
     # encrypting the provided data
 
-    cursor = conn.cursor()
-    cursor.execute('SELECT LAST(Account_ID) FROM Accounts')
-    lastID = cursor.fetchone()
-    x = lastID[0] + 1
+    cursor = connecter.cursor()
+    cursor.execute('SELECT * FROM Accounts ORDER BY Account_ID DESC LIMIT 1;')
+    last = cursor.fetchone()
+    x = last[0] + 1
 
-    cursor.execute('INSERT INTO Accounts VALUES (?,?,?,?)',
+    cursor.execute('INSERT INTO Accounts VALUES (%s,%s,%s,%s)',
                    (x, Cipherusername, Cipherpassword, Cipheremail))
     print(Cipherusername)
-    conn.commit()
+    connecter.commit()
     print("value added to the database")
-    return "True"
+
 # used to add the provided sign up data to the database
 
 
@@ -100,10 +155,9 @@ def Login():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
     cdata = b''
     data = b''
-    global key, iv, account_ID, test, j, arr_ID, arr_data, counts, i, counting
+    global key, iv, account_ID, test, j, arr_ID, arr_data, counts, i, counting, con_string, connecter
     arr_data.clear()
     arr_ID.clear()
     counting = -1
@@ -120,8 +174,8 @@ def login():
     username = new.split('|')[0].upper()
     password = new.split('|')[1]
     conn = pyodbc.connect(con_string)
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Accounts ')
+    cursor = connecter.cursor()
+    cursor.execute('SELECT * FROM Accounts;')
     result = cursor.fetchall()
     for row in result:
         cdata = row[1]
@@ -131,18 +185,28 @@ def login():
         data = row[2]
         C3 = AES.new(key, AES.MODE_CBC, iv)
         plainpass = unpad(C3.decrypt(data), 16)
+
+        mail = row[3]
+        C4 = AES.new(key, AES.MODE_CBC, iv)
+        plainmail = unpad(C4.decrypt(mail), 16)
+
         # decrypting the data from the database
         # When an encrypted text is decrypted between every letter \x00 can be found which results
         plainpass = plainpass.replace(b'\x00', b'')
         # in not being able to confirm whether or not the password and username are correct
         plainname = plainname.replace(b'\x00', b'')
+        plainmail = plainmail.replace(b'\x00', b'')
         # so I am using replace to remove \x00 from the byte data
         passw = plainpass.decode()
         name = plainname.decode()
-        if (name == username) and (passw == password):
+        print(name)
+        email = plainmail.decode()
+        print(email)
+        if ((name == username) or (username == email)) and (passw == password):
             account_ID = row[0]
             test = "True"
 
+    print(test)
     return test
 # used to confirm the login details
 
@@ -169,18 +233,21 @@ def menu():
 
 @app.route('/count', methods=['GET', 'POST'])
 def count():
-    global account_ID, arr_ID, arr_data, counts, j, i, counting, editDats
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+
     if request.method == 'GET':
+        global account_ID, arr_ID, arr_data, counts, j, i, counting, editDats, con_string, connecter, tempaccount_ID
         i = 0
         arr_data.clear()
         arr_ID.clear()
         counting = -1
+        tempaccount_ID.clear()
+        tempaccount_ID.append(account_ID)
         editDats.clear()
         conn = pyodbc.connect(con_string)
-        cursor = conn.cursor()
+        cursor = connecter.cursor()
         cursor.execute(
-            "SELECT * FROM Passwords WHERE Account_ID=?", (account_ID))
+            'SELECT * FROM Passwords WHERE Account_ID = %s;', (tempaccount_ID))
+
         result = cursor.fetchall()
         if result:
             for row in result:
@@ -188,9 +255,10 @@ def count():
                 arr_data.append(row[1])
                 counts = counts + 1
             print(counts)
-            return str(counts)
+        cursor.close
+        return str(counts)
 
-        return False
+        return "False"
 # counts the number of passwords that have the same account_ID as the previously provided accout_ID
 
 # calls the passwords that are related to the correct account_ID
@@ -198,8 +266,7 @@ def count():
 
 @app.route('/call', methods=['GET', 'POST'])
 def call():
-    global account_ID, arr_ID, arr_data, counts, i, counting
-    con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+    global account_ID, arr_ID, arr_data, counts, i, counting, con_string, connecter
 
     if request.method == 'GET':
         # This ensures that the program does not go past the arrays limit
@@ -227,20 +294,19 @@ def save():
         upload = True
         data = request.get_json()
         newdata = data
-        global account_ID, arrdat, i, arr_data, counts, counting
+        global account_ID, arrdat, i, arr_data, counts, counting, con_string, connecter
         arrdat = newdata.split("~")
-        con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
         conn = pyodbc.connect(con_string)
 
-        cursor = conn.cursor()
+        cursor = connecter.cursor()
 
         # encrypting data to be added to the database
         C1 = AES.new(key, AES.MODE_CBC, iv)
         cipherdata = C1.encrypt(pad(arrdat[1].encode(), 16))
         # encrypting data to be added to the database
-        cursor.execute('UPDATE Passwords SET Encrypted_data = ? WHERE ID = ?',
+        cursor.execute('UPDATE Passwords SET Encrypted_data = %s WHERE ID = %s;',
                        (cipherdata, arrdat[0]))
-        conn.commit()
+        connecter.commit()
         arr_data.clear()  # I had to add this block of code and it results in the person having to press the call button twice when calling
         # their passwords (because I figured this out so late I was not able to change this glitch)
         counts = 0
@@ -284,23 +350,22 @@ def addd():
     if request.method == 'POST':
         data = request.get_json()
         newdats = data
-        global account_ID, arrdat, i, arr_data, counts
-        con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
+        global account_ID, arrdat, i, arr_data, counts, con_string, connecter
         conn = pyodbc.connect(con_string)
 
-        cursor = conn.cursor()
-        cursor.execute('SELECT LAST(ID) FROM Passwords')
-        lastID = cursor.fetchone()
-        x = lastID[0] + 1
+        cursor = connecter.cursor()
+        cursor.execute('SELECT * FROM Passwords ORDER BY ID DESC LIMIT 1;')
+        last = cursor.fetchone()
+        x = last[0] + 1
 
         C1 = AES.new(key, AES.MODE_CBC, iv)
         cipherdata = C1.encrypt(pad(newdats.encode(), 16))
         # encrypting data to be added to the database
-        cursor.execute('INSERT INTO Passwords VALUES (?,?,?)',
+        cursor.execute('INSERT INTO Passwords VALUES (%s,%s,%s)',
                        (x, cipherdata, account_ID))
-        conn.commit()
+        connecter.commit()
         upload = True
-        return True
+        return "True"
 
     if((request.method == 'GET') and not(upload)):
         return "True"
@@ -312,18 +377,18 @@ delete = False
 
 @app.route('/delete', methods=['GET', 'POST'])
 def deleted():
-    global delete
+    global delete, con_string, connecter, newdats
     if request.method == 'POST':
         delete = True
         data = request.get_json()
-        newdats = data
+        newdats.clear()
+        newdats.append(data)
 
-        con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
         conn = pyodbc.connect(con_string)
-        cursor = conn.cursor()
+        cursor = connecter.cursor()
 
-        cursor.execute('DELETE * FROM Passwords WHERE ID = ?', (newdats))
-        cursor.commit()
+        cursor.execute('DELETE FROM Passwords WHERE ID = %s;', (newdats))
+        connecter.commit()
         print(newdats)
         return "True"
 

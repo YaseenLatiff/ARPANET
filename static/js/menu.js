@@ -56,9 +56,10 @@ function call(){
                             
 
                             eddy = document.createElement("BUTTON");
-                            
+                            eddy.style.borderRadius = 10 + "px";
+
                             deddy = document.createElement("BUTTON");
-                           
+                            deddy.style.borderRadius = 10 + "px";
 
                             email = document.createTextNode(my_Arr[0]);
                             password = document.createTextNode( my_Arr[1]);
@@ -103,27 +104,30 @@ function call(){
                             });
                             deddy.addEventListener('click', function(){
                                 
-                                
-                                $.ajax({
-                                    url:'/delete',
-                                    type:'POST',
-                                    contentType: "application/json",
-                                    data:JSON.stringify(this.id)
-                                                        
-                                });
-                                $.ajax({
-                                    url:'/delete',
-                                    type:'GET',
-                                    contentType: "application/json",
-                                    success:function(data){
-                                        newdats = data;
-                                        if(newdats == "True"){
-                                            alert("That has been deleted");
-                                            location.reload();
+                                res = confirm("Are you sure you want to delete this password?");
+                                if (res == true){
+                                    $.ajax({
+                                        url:'/delete',
+                                        type:'POST',
+                                        contentType: "application/json",
+                                        data:JSON.stringify(this.id)
+                                                            
+                                    });
+                                    $.ajax({
+                                        url:'/delete',
+                                        type:'GET',
+                                        contentType: "application/json",
+                                        success:function(data){
+                                            newdats = data;
+                                            if(newdats == "True"){
+                                                alert("That has been deleted");
+                                                location.reload();
+                                            }
                                         }
-                                    }
-                                                        
-                                });
+                                                            
+                                    });
+                                }
+                                
                                                     
                             });
 
@@ -196,7 +200,7 @@ function save(){
 }
 
 function logout(){
-    window.location.replace("http://127.0.0.1:5000/");//calls the index html page
+    window.location.replace("/");//calls the index html page
 }
 
 function add(){

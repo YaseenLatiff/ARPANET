@@ -1,10 +1,9 @@
 function add(){
-    username = document.getElementById("username");
-    password = document.getElementById("password");
-    company = document.getElementById("company");
-    if(!(username.value = "") && !(password.value = "") && !(company.value = "")){
+    let username = document.getElementById("Susername");
+    let password = document.getElementById("Spassword");
+    let company = document.getElementById("Scompany");
+    
         sdata = username.value+"|"+password.value+"|"+company.value;
-
         $.ajax({
             url: '/addd',
             type: 'POST',
@@ -25,10 +24,6 @@ function add(){
                 }
             }
         });
-    }
-    else{
-        alert("Please fill in all fields");
-    }
     
     
 

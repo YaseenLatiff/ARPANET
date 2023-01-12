@@ -9,6 +9,19 @@
 </head>
 <body>
     <script src="static/js/index.js"></script>
+    <script>
+        var toggle_list = document.getElementById('toggle_list');
+        toggle_list.style.maxHeight = '0px'
+        function togglemenu(){
+            if(toggle_list.style.maxHeight =='0px')
+            {
+                toggle_list.style.maxHeight = '130px'
+            }
+            else{
+                toggle_list.style.maxHeight = '0px'
+            }
+        }
+    </script>
    <div class="container">
        <div class="navigation_bar">
 
@@ -16,7 +29,7 @@
            <nav>
                <ul id="toggle_list">
                    <li><a style="font-size: 20px; font-weight: bold;" href="#body_container">HOME</a></li>
-                   <li><a style="font-size: 20px; font-weight: bold;" href="#title">SERVICES</a></li>
+                   <li><a style="font-size: 20px; font-weight: bold;" href="#service">SERVICES</a></li>
                    <li><a style="font-size: 20px; font-weight: bold;" href="#contactUs">CONTACT US</a></li>
                    <li><a style="font-size: 20px; font-weight: bold;" href="#about">ABOUT</a></li>
                    <li><a style="font-size: 20px; font-weight: bold;" href="/Login">LOGIN</a></li>
@@ -24,29 +37,39 @@
            </nav>
            <img src="static\images\logoo.jpg" class="menu" onclick="togglemenu()">
        </div>
-       <div id="body_container" class="body_container">
-           <div class="body1">
-               <h2>PASSWORD MANANGER</h2>
-               <p>Secure you Password with One of the most trusted PASSWORD MANANGER that uses high level of encryption to secure your passwords</p>
-         <button class="btn" onclick="register()" > STARTED</button> </a>
+       <section id="body_container" >
+        <div class="body_container">
+            <div class="body1">
+                <div id="title" class="title">
+                    <h1>Password Manager</h1>
+                </div>
+                <p>This is a passoword manager that shows the groups ability to create web applications and web sites it is not meant for commercial use. Please note that if you do use it for your personal needs that the code is freely available on a remote repository. This creates a huge security risk please do not use this app unless you want to test out its features. Again it is not meant for personal use.</p>
+                 <button class="btn" onclick="register()" >GET STARTED</button> </a>
+             </div>
+            <div class="body2">
+                <img src="static\images\Logo2.jpg" class="logoD">
             </div>
-           <div class="body2">
-               <img src="static\images\Logo2.jpg" class="logoD">
-           </div>
-       </div>
+        </div>
+       </section>
+     
    </div>
-   <section>
-       <div id="title" class="title">
-           <h1>Services</h1>
-       </div>
-   </section>
+   
+   <section id="service" >
         <div class="serviceInfor">
-            <img src="static\images\services.jpg" style="width: 250px;">
+            <div  class="title">
+                <h1>Services</h1>
+            </div>
+            <img src="static\images\services.jpg" style="width: 250px; border-radius: 10px;">
             <h3>We offer a well secured Password Mananging Services that is trusted By millions and millions of Users around the world,<br>
             We are trusted by well trained Ethical hackers with lot of experience in the field of Pen-testing. <a href="#body_container">Join Now</a> to secure your Passwords today</h3>
         </div>
-        <div id="contactUs" class="contactUs">
-            <img src="static\images\contactUs.jpg" alt="" style="width: 250px;">
+   </section>
+    <section id="contactUs">
+        <div  class="contactUs">
+            <div id="title" class="title">
+                <h1>Contact us</h1>
+            </div>
+            <img src="static\images\contactUs.jpg" alt="" style="width: 250px;border-radius: 10px;">
             <h3>For more infor contact us now in all Our Media Platforms</h3>
                 <br>
                 <br>
@@ -59,27 +82,24 @@
                 </div>
                 <h3>And Join Our Happy Community today, ask any questions and find the frequently asked questions about our service with their answers now</h3>
         </div>
-        <div id="about" class="about" style="background-color: gray;">
-           <h2>ABOUT PAGE</h2>
-           <BR>
-           <BR>
-    
-           <h3>Arpanet is a South African based Company that uses high level of encryption (hence Logo is written e-Password which is encrypted Passwords) to secure users Passwords. It is safe and more user friendly (easy to use)<br></h3> 
-<br>
-           <p> ARPANET copyright &copy; rules 2022</p>
-        </div>
-   <script>
-       var toggle_list = document.getElementById('toggle_list');
-       toggle_list.style.maxHeight = '0px'
-       function togglemenu(){
-           if(toggle_list.style.maxHeight =='0px')
-           {
-               toggle_list.style.maxHeight = '130px'
-           }
-           else{
-               toggle_list.style.maxHeight = '0px'
-           }
-       }
-   </script>
+    </section>
+    <footer>
+        <section id="about">
+            <div   class="about" >
+                <div id="title" class="title">
+                    <h1 >About us</h1>
+                </div>
+                <br>
+                <br>
+        
+                <h3>Ok the homepages front-end was created by Onwabe Zibeke +27 78 430 0901 and Mesuli Shandu +27 84 042 7505 the desgin was expertly done, they were also responsible for the login and registration screen.  Kevashen Pillay +27 83 271 8379 helped out with the javascript and provided the SQL statements to access the Microsoft access database for the python backend. I Yaseen Latiff 084 563 1935 was responsible for creating the python backend with flask, and connecting the javascript with ajax statments on the javascript end. This job also involved figuring out how to creatively use the Ajax statments to send arrays of data since certain things are not possible with the flask framework and ajax API.<br></h3> 
+                <br>
+                <p> ARPANET copyright &copy; rules 2022</p>
+            </div>
+        </section>    
+        
+    </footer>
+           
+   
 </body>
 </html>
