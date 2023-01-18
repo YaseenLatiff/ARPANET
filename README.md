@@ -30,4 +30,4 @@ We are almost done. I just want to spruce up the design and test it a bit. Once 
 
 ## EDIT #4 2023/01/18-
 ### Latest edits:
-*So I just needed to change the database to a cloud database so I could properly deploy it. It is on PythonAnywhere I will also deploy it using pythonanywhere.
+* So I just needed to change the database to a cloud database so I could properly deploy it. It is on PythonAnywhere I will also deploy it using pythonanywhere.
