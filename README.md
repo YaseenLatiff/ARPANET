@@ -23,7 +23,11 @@ To see the older version please check the main branch.
 We are almost done. I just want to spruce up the design and test it a bit. Once that is done I will deploy the web application. I may have to change the database. but thats cool. We are almost done baby!!!!!!!!!!!!!!!! 
 
 ## EDIT #3 2023/01/12-
-## Latest edits:
+### Latest edits:
 * I changed the database from MS Access to MySQL as that will make the deployment easier. 
 * The funtionality has been improved. Initially I found issues with adding a password after my last update. Turns out there was a bug that I did not notice in the code.
 * I changed the design even more. I did not really like the use of the 2 colors black and golden rod and decided to change up the designs. Its highly likely that this will not be the last time I will change the designs.
+
+## EDIT #4 2023/01/18-
+### Latest edits:
+*So I just needed to change the database to a cloud database so I could properly deploy it. It is on PythonAnywhere I will also deploy it using pythonanywhere.
