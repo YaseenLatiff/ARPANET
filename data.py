@@ -5,7 +5,6 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import pyodbc
-import psycopg2
 import os
 import mysql.connector
 
@@ -25,10 +24,10 @@ tempaccount_ID = []
 newdats = []
 
 con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
-connecter = mysql.connector.connect(host='localhost',
+connecter = mysql.connector.connect(host='Yaseen.mysql.pythonanywhere-services.com',
                                     database='Password_Manager',
-                                    user='root',
-                                    password='4746')
+                                    user='Yaseen$Password_Manager',
+                                    password='Yasu0178264746+')
 res = "None"
 app = Flask(__name__)
 
@@ -47,10 +46,10 @@ def index():
     counts = 0
     account_ID = 0
     con_string = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\Yaseen\Documents\ARPANET\ARPANET\Password Manager.accdb;'
-    connecter = mysql.connector.connect(host='localhost',
-                                        database='Password_Manager',
-                                        user='root',
-                                        password='4746')
+    connecter = mysql.connector.connect(host='Yaseen.mysql.pythonanywhere-services.com',
+                                    database='Password_Manager',
+                                    user='Yaseen$Password_Manager',
+                                    password='Yasu0178264746+')
     return render_template('index.html')
 # Makes sure the application will open up on the index html page
 
